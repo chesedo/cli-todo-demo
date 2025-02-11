@@ -8,6 +8,13 @@ use crate::storage::{self, FileStorage};
 pub struct Task {
     title: String,
     completed: bool,
+
+    #[serde(default = "default_priority")]
+    priority: u8,
+}
+
+fn default_priority() -> u8 {
+    1
 }
 
 #[derive(Debug, Error)]
@@ -30,12 +37,13 @@ impl TaskManager {
         })
     }
 
-    pub fn add(&mut self, title: String) -> Result<(), Error> {
+    pub fn add(&mut self, title: String, priority: u8) -> Result<(), Error> {
         let mut tasks = self.storage.load()?;
 
         tasks.push(Task {
             title,
             completed: false,
+            priority,
         });
 
         self.storage.save(&tasks)?;
@@ -56,7 +64,13 @@ impl TaskManager {
         for (index, task) in tasks.into_iter().enumerate() {
             let status = if task.completed { "✓" } else { "◌" };
 
-            println!("[{}] - {}: {}", index + 1, status, task.title);
+            println!(
+                "[{}] - {}: ({}) {}",
+                index + 1,
+                status,
+                task.priority,
+                task.title
+            );
         }
 
         Ok(())

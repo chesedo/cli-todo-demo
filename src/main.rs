@@ -11,8 +11,8 @@ fn main() -> anyhow::Result<()> {
     let mut task_manager = TaskManager::new()?;
 
     match command {
-        Command::Add { title } => {
-            task_manager.add(title)?;
+        Command::Add { title, priority } => {
+            task_manager.add(title, priority)?;
 
             println!("Successfully added task!");
             println!();
