@@ -3,6 +3,7 @@ use cli::Command;
 use task::TaskManager;
 
 mod cli;
+mod storage;
 mod task;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
