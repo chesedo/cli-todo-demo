@@ -5,7 +5,7 @@ use task::TaskManager;
 mod cli;
 mod task;
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let command = Command::parse();
     let mut task_manager = TaskManager::new();
 
@@ -20,7 +20,7 @@ fn main() {
         }
         Command::List => task_manager.list(),
         Command::Complete { index } => {
-            task_manager.complete(index);
+            task_manager.complete(index)?;
 
             println!("Successfully completed task!");
             println!();
@@ -28,4 +28,6 @@ fn main() {
             task_manager.list();
         }
     }
+
+    Ok(())
 }

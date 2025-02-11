@@ -36,9 +36,11 @@ impl TaskManager {
         }
     }
 
-    pub fn complete(&mut self, index: usize) {
-        let task = self.tasks.get_mut(index - 1).unwrap();
+    pub fn complete(&mut self, index: usize) -> Result<(), &str> {
+        let task = self.tasks.get_mut(index - 1).ok_or("Task not found")?;
 
         task.completed = true;
+
+        Ok(())
     }
 }
