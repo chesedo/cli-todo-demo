@@ -62,7 +62,11 @@ impl TaskManager {
         println!("{}", "Tasks list:".green());
 
         for (index, task) in tasks.into_iter().enumerate() {
-            let status = if task.completed { "✓" } else { "◌" };
+            let status = if task.completed {
+                "✓".green()
+            } else {
+                "◌".yellow()
+            };
 
             println!(
                 "[{}] - {}: ({}) {}",
